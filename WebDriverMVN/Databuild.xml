@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project name="TestNG" default="Generate-Report" basedir=".">
+
+<echo message="pulling in property files"/>
+<property file="axis_bujava.properties"/>
+	
+<echo message="calling the web services generation ant task: axis_bujava"/>
+ 
+	
+	<target name="Clean">
+  	 <delete failonerror="false" dir="test-output" />
+  </target>
+	
+	 <target name="Create" depends="Clean">
+	  	 <mkdir dir="test-output" />
+	  </target>
+	
+	<path id="classpath" description="Set the class path for the jar">
+		<fileset dir="C:/Users/Agustí/.m2/repository/org/seleniumhq/selenium/selenium-java/3.141.59" includes="**/*.jar"></fileset>
+		<pathelement location="C:/Users/Agustí/.m2/repository/org/seleniumhq/selenium/selenium-java/3.12.0/selenium-java-3.12.0.jar"/>
+		<pathelement location="C:/Users/Agustí/.m2/repository/junit/junit/4.11/junit-4.11.jar"/>
+		<pathelement location="C:/Users/Agustí/.m2/repository/org/seleniumhq/selenium/selenium-server/2.25.0/selenium-server-2.25.0.jar"/>
+		<pathelement location="target\classes"/>
+	</path>
+	<!-- taskdef name="TestNG-Ant" classpathref="classpath" classname="target.classes.testcase.TestClass"></taskdef -->
+		
+	<target name="Compile" depends="Create">
+		<javac classpathref="classpath" includeantruntime="true" srcdir="src" destdir="target\classes"  includes="**/*.java" verbose="true">
+		</javac>
+	</target>
+	
+	<target name="Run-Test" depends="Compile">
+			<TestNG-Ant outputdir="test-output" haltonfailure="false" verbose="2" classpathref="classpath">
+				<xmlfileset dir="." includes="testng.xml"/>
+			</TestNG-Ant>
+		</target>
+		
+	    <target name="Generate-Report" depends="Run-Test" description="Generate the Xlsx report using the testng-result.xml">
+	        <java classpathref="classpath" classname="report.ExcelReportGenerator" ></java>
+	    </target>
+  
+</project>

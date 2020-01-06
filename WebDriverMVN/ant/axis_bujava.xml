@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="TestNG" basedir=".">
+
+<echo message="pulling in property files"/>
+<property file="axis_bujava.properties"/>
+	
+<echo message="calling the web services generation ant task: axis_bujava"/>
+ 
+	
+	<target name="Clean">
+  	 <delete failonerror="false" dir="test-output" />
+  </target>
+	
+	 <target name="Create" depends="Clean">
+	  	 <mkdir dir="test-output" />
+	  </target>
+	
+	<tartget name="Compile" depends="Create">
+	
+	</tartget>
+	
+	<tartget name="Run-Test" depends="Compile">
+	
+	</tartget>
+	
+	<tartget name="Generate-Report" depends="Run-Test">
+	
+	</tartget>
+  
+</project>
